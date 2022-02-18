@@ -14,8 +14,7 @@ if ENV == 'dev':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:251hazem179@localhost/zixel_api'
 else:
     app.debug = False
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-    #'postgresql://ulviszdhzgciij:7172b0759a4ad30f1a90e9bd25339a083dc191b46425f1946dfe1199aa7ec5c6@ec2-23-20-73-25.compute-1.amazonaws.com:5432/d5viicg6k2fpsj'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ulviszdhzgciij:7172b0759a4ad30f1a90e9bd25339a083dc191b46425f1946dfe1199aa7ec5c6@ec2-23-20-73-25.compute-1.amazonaws.com:5432/d5viicg6k2fpsj'
 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
