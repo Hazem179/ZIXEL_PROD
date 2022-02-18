@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 
 ######### APP CONFIGRATIONS #########
 app = Flask(__name__)
-ENV = 'dev'
+ENV = 'debug'
 
 if ENV == 'dev':
     app.debug = True
