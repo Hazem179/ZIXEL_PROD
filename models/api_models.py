@@ -24,3 +24,4 @@ class APIModelSchema(ma.Schema):
 
 api_schema = APIModelSchema()
 apis_schema = APIModelSchema(many=True)
+

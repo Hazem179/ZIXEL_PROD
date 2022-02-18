@@ -2,6 +2,7 @@ from flask_restful import Resource
 from flask import request,jsonify
 from app import db
 from models.api_models import *
+from NLP.tags_extraction import tags_extraction
 
 
 def check_object(name):
@@ -24,11 +25,12 @@ class ProductAPI(Resource):
         data = request.get_json()
         name = data["name"]
         description = data["description"]
+        tags = tags_extraction(description=description)
         price = data["price"]
         url_context = data["url_context"]
         end_points = data["end_points"]
         user_id = data["user_id"]
-        new_api = APIModel(name=name, description=description, price=price,url_context=url_context,end_points=end_points,user_id=user_id)
+        new_api = APIModel(name=name, description=description,tags=tags ,price=price,url_context=url_context,end_points=end_points,user_id=user_id)
         db.session.add(new_api)
         db.session.commit()
         return api_schema.jsonify(new_api)
@@ -38,6 +40,8 @@ class ProductAPI(Resource):
         data = request.get_json()
         api.name = data["name"]
         api.description = data["description"]
+        tags = tags_extraction(data["description"])
+        api.tags= tags
         api.price = data["price"]
         api.url_context = data["url_context"]
         api.end_points = data["end_points"]

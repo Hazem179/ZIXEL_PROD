@@ -2,6 +2,7 @@ from flask import jsonify,request
 from flask_restful import Resource
 from app import db
 from models.sw_models import SoftwareModel,sws_schema,sw_schema
+from NLP.tags_extraction import tags_extraction
 
 
 def check_object(name):
@@ -22,9 +23,10 @@ class ProductSoftware(Resource):
         data = request.get_json()
         name = data["name"]
         description = data["description"]
+        tags = tags_extraction(description=description)
         price = data["price"]
         user_id = data["user_id"]
-        new_software = SoftwareModel(name=name,description=description,price=price,user_id=user_id)
+        new_software = SoftwareModel(name=name,description=description,tags= tags,price=price,user_id=user_id)
         db.session.add(new_software)
         db.session.commit()
         return sw_schema.jsonify(new_software)
@@ -34,8 +36,9 @@ class ProductSoftware(Resource):
         data = request.get_json()
         software.name = data["name"]
         software.description = data["description"]
+        tags = tags_extraction(data["description"])
+        software.tags= tags
         software.price = data["price"]
-
         db.session.commit()
         return sw_schema.jsonify(software)
 
